@@ -24,16 +24,16 @@ module.exports = function (bot, builder) {
 					.text(text.help.text)
 					// .images([builder.CardImage.create(session, 'https://webapps.qlik.com/img/QS_Hub.png')])
 					.buttons([
-						builder.CardAction.postBack(session, "salesforce", text.salesforce.title)//,
-						// builder.CardAction.postBack(session, "cio", text.cio.title),
-						// builder.CardAction.postBack(session, "helpdesk", text.helpdesk.title),
-						// builder.CardAction.postBack(session, "language", text.language.button)
+						builder.CardAction.postBack(session, "salesforce", text.salesforce.title),
+						builder.CardAction.postBack(session, "cio", text.cio.title),
+						builder.CardAction.postBack(session, "helpdesk", text.helpdesk.title),
+						builder.CardAction.postBack(session, "language", text.language.button)
 					])
 			]);
 			switch (session.message.text.toLocaleLowerCase()) {
 				case 'salesforce':
 					session.beginDialog('salesforce');
-					return session.message.text.toLocaleLowerCase();
+					break;
 				case 'cio':
 					session.beginDialog('cio');
 					break;

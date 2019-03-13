@@ -6,7 +6,8 @@
 */
 
 const app = require('./app');
-const https = require('https');
+//const https = require('https');
+const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const logger = require('./models/utilities/Logger');
@@ -61,7 +62,8 @@ function onError(error) {
 /**
  * Create HTTP/HTTPS server.
  */
-var certFolder = (process.env.NODE_ENV == 'development') ? 'localhost' : 'demosapi.qlik.com';
+var certFolder = 'localhost';
+//var certFolder = (process.env.NODE_ENV == 'development') ? 'localhost' : 'demosapi.qlik.com';
 var keyPath = path.join(__dirname, 'certs', certFolder, 'server_key.pem');
 var serverPath = path.join(__dirname, 'certs', certFolder, 'server.pem');
 const options = {
@@ -72,10 +74,13 @@ const options = {
 /**
  * Create the server
  */
-const httpsServer = https.createServer(options, app);
+//const httpsServer = https.createServer(options, app);
+const httpServer = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
-httpsServer.listen(port, '0.0.0.0'); // localhost breaks on server
-httpsServer.on('error', onError);
+// httpsServer.listen(port, '0.0.0.0'); // localhost breaks on server
+// httpsServer.on('error', onError);
+httpServer.listen(port, '0.0.0.0'); // localhost breaks on server
+httpServer.on('error', onError);

@@ -7,8 +7,8 @@
 
 const site = require('../../../../models/sense-bot');
 const config = require('../../../../config.json');
+// let engine = null;
 const qvf = config.qvf.salesforce;
-const teams = require('botbuilder-teams');
 let text = config.text.en;
 const shared = require('./shared');
 
@@ -22,7 +22,6 @@ module.exports = (bot, builder) => {
 	*/
 	async function salesforceDashboard(session) {
 		try {
-			session.sendTyping();
 			let result = await shared.engine.kpiMulti([
 				`Sum({<[Opportunity Open_Flag]={1}, [Opportunity Close Quarter/Year]={"$(vCurrentQ)"}>} [Opportunity Amount])`,
 				`Sum({<[Opportunity Open_Flag]={1}, [Opportunity Close Quarter/Year]={"$(vCurrentQ)"}>} Opportunity_Count)`,
@@ -42,12 +41,11 @@ module.exports = (bot, builder) => {
 	 * Salesforce Opportunities with a list of KPIs
 	 * @function salesforceOpportunities()
 	 * @param {string} message - The message to send to all users in the database.
-	 * @author yianni.ververis@qlik.com, vpai@iconresources.com
+	 * @author yianni.ververis@qlik.com
 	 * 
 	*/
 	async function salesforceOpportunities(session) {
 		try {
-			session.sendTyping();
 			let result = await shared.engine.kpiMulti([
 				`num(Sum({<[Opportunity Triphase]={'OPEN'}>} [Opportunity Amount]),'$###,###,###')`,
 				`num(Sum({<[Opportunity Triphase]={'OPEN'}>} Opportunity_Count),'###,###,###')`,
@@ -59,7 +57,6 @@ module.exports = (bot, builder) => {
 			]);
 			session.send(text.salesforce.opportunities.text, result[0][0].qText, result[1][0].qText, result[2][0].qText, result[3][0].qText, result[4][0].qText, result[5][0].qText, result[6][0].qText);
 			site.logger.info(`loaded`, { route: `api/sense-bot/microsoft::salesforce-opportunities()` });
-			//session.beginDialog("getFields");
 		}
 		catch (error) {
 			site.logger.info(`error: ${error}`, { route: `api/sense-bot/microsoft::salesforce-opportunities()` });
@@ -77,7 +74,6 @@ module.exports = (bot, builder) => {
 		try {
 			let sessionLanguage = session.preferredLocale().split('-')[0];
 			text = (config.text[sessionLanguage]) ? config.text[sessionLanguage] : config.text.en;
-			session.sendTyping();
             let input = qvf;
             if (qvf.auth) input.userId = session.message.user.id;
 			shared.engine = await new site.Enigma(input);
@@ -86,14 +82,14 @@ module.exports = (bot, builder) => {
 			msg.attachments([
 				new builder.HeroCard(session)
 					.title("Salesforce")
-					//.subtitle('https://webapps.qlik.com/salesforce/index.html')
+					.subtitle('https://webapps.qlik.com/salesforce/index.html')
 					.text(text.actions)
-					//.images([builder.CardImage.create(session, 'https://webapps.qlik.com/img/2017_salesforce.png')])
+					.images([builder.CardImage.create(session, 'https://webapps.qlik.com/img/2017_salesforce.png')])
 					.buttons([
 						builder.CardAction.postBack(session, "dashboard", text.salesforce.dashboard.button),
 						builder.CardAction.postBack(session, "opportunities", text.salesforce.opportunities.button),
-						//builder.CardAction.postBack(session, "chart-current-quarter", "Current Quarter Barchart"),
-						//builder.CardAction.postBack(session, "chart-current-quarter-opportunities", "Current Quarter Opportunities Barchart"),
+						builder.CardAction.postBack(session, "chart-current-quarter", "Current Quarter Barchart"),
+						builder.CardAction.postBack(session, "chart-current-quarter-opportunities", "Current Quarter Opportunities Barchart"),
 						builder.CardAction.postBack(session, "exit", text.exit.button)
 					])
 			]);

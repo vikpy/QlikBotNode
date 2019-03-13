@@ -7,12 +7,10 @@ let shared = {
     getFields: async () => {
 		try {
             let fields = await shared.engine.getList("FieldList");
-            //let msg = '';
-            let msg = [];
+            let msg = '';
             for (let value of fields) {
-                // msg += `
-                //     ${value.qName}`
-                msg.push(value.qName);
+                msg += `
+                    ${value.qName}`
             }
             return msg;
 			site.logger.info(`loaded`, { route: `api/sense-bot/microsoft/shared::getFields()` });
@@ -24,22 +22,20 @@ let shared = {
     getFieldData: async (field) => {
 		try {
             let result = await shared.engine.getFieldList(field);
-            //let msg = ``;
-            let msg = [];
+            let msg = ``;
             if (result && result.length){                
                 for (let value of result) {
-                    // msg += `
-                    //     ${value[0].qText}`
-                    msg.push(value[0].qText);
+                    msg += `
+                        ${value[0].qText}`
                 }
             } else {
                 msg = `No Data for ${field}`;                
             }
-			site.logger.info(`loaded`, { route: `api/sense-bot/microsoft/shared::getFieldData()` });
             return msg;
+			site.logger.info(`loaded`, { route: `api/sense-bot/microsoft/shared::getFields()` });
 		}
 		catch (error) {
-			site.logger.info(`error: ${error}`, { route: `api/sense-bot/microsoft::getFieldData()` });
+			site.logger.info(`error: ${error}`, { route: `api/sense-bot/microsoft::getFields()` });
 		}
     },
     getSelections: async (session) => {
@@ -82,18 +78,18 @@ let shared = {
             if (result && result.length){ 
                 msg = `${field}: ${result[0][0].qText}`;
             }
-            site.logger.info(`loaded`, { route: `api/sense-bot/microsoft/shared::select()` });
             return msg;
-			
+			site.logger.info(`loaded`, { route: `api/sense-bot/microsoft/shared::select()` });
 		}
 		catch (error) {
 			site.logger.info(`error: ${error}`, { route: `api/sense-bot/microsoft::select()` });
 		}
     }, 
-    clear: async (field) => {
+    clear: async (session, field) => {
 		try {
             let msg = await shared.engine.clear(field);
-            site.logger.info(`loaded`, { route: `api/sense-bot/microsoft/shared::select()` });
+            session.send(msg);
+			site.logger.info(`loaded`, { route: `api/sense-bot/microsoft/shared::select()` });
 		}
 		catch (error) {
 			site.logger.info(`error: ${error}`, { route: `api/sense-bot/microsoft::select()` });

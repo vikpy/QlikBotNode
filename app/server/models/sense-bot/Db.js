@@ -15,8 +15,8 @@ const db = class extends DbClass {
 		this.input = input;
 		this.config = {
 			host: 'localhost',
-			user: 'sensebot',
-			password: '1234',
+			user: 'qlikviewapp',
+			password: 'Welc0me@123',
 			database: 'sensebot'
 		};
 	}

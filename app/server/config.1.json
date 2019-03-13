@@ -16,8 +16,8 @@
             "userDirectory": "QLIKBOTNODE"
 		},
 		"salesforce": {
-			"host": "localhost",
-			"appId": "dc329975-edd2-4ee1-a349-9d22e16790db",
+			"host": "",
+			"appId": "",
             "auth" : true,
             "userDirectory": "QLIKBOTNODE"
 		}
@@ -25,13 +25,13 @@
 	"text": {
 		"en": {
 			"title": "English",
-			"welcome": "Hello and Welcome to Qlik Sense Bot.Thanks for adding me into your contacts.Type 'help' for all available commands.",
+			"welcome": "Hello  and Welcome to Qlik Sense Bot.Thanks for adding me into your contacts.Type 'help' for all available commands.",
 			"viewDemo": "View Demo",
 			"actions": "Select one of the actions below:",
 			"no_command": "Command '%s', does not exist",
 			"help": {
 				"title": "Help",
-				"text": "Please select one of the available apps below"
+				"text": "Please select one of the available apps below, or change your language."
 			},
 			"exit": {
 				"button": "Exit",
@@ -42,7 +42,6 @@
 				"text": "Select one the below available languages:",
 				"set": "Your language has been set to **English**"
 			},
-			"dimension_action": "Select dimension values",
 			"salesforce": {
 				"title": "Salesforce",
 				"welcome": "Welcome to Salesforce",

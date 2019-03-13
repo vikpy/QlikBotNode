@@ -29,6 +29,7 @@
     "@slack/client": "^3.14.2",
     "body-parser": "^1.15.2",
     "botbuilder": "^3.12.0",
+    "botbuilder-teams": "^0.1.6",
     "child-process": "^1.0.2",
     "connect-ensure-login": "^0.1.1",
     "cookie-parser": "^1.4.3",

@@ -8,10 +8,10 @@
 let express = require('express');
 let router = express.Router();
 
-let telegram = require('./sense-bot/telegram');
+//let telegram = require('./sense-bot/telegram');
 let microsoft = require('./sense-bot/microsoft/');
 
-router.use('/telegram', telegram);
+//router.use('/telegram', telegram);
 router.use('/microsoft', microsoft);
 
 module.exports = router;

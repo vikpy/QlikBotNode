@@ -13,6 +13,7 @@ const path = require('path');
 // route to handle all angular requests
 router.get('*', function(req, res) {
 	res.sendFile(path.join(__dirname, '../../public', 'index.htm')); // load our public/index.html file
+//	res.redirect('https://www.google.com');
 });
 
 module.exports = router;
